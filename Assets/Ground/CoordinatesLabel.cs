@@ -30,6 +30,11 @@ public class CoordinatesLabel : MonoBehaviour
         coordinates[0] = Mathf.RoundToInt(transform.parent.position.x/EditorSnapSettings.move.x);
         coordinates[1] = Mathf.RoundToInt(transform.parent.position.z/EditorSnapSettings.move.z);
         label.text = $"({coordinates[0]},{coordinates[1]})";
+        label.transform.localRotation = Quaternion.Euler(
+            90, 
+            label.transform.parent.rotation.eulerAngles.y*-1,
+            0
+            );
     }
 
     void UpdateContainerName()

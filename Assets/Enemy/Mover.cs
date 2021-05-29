@@ -5,8 +5,15 @@ using UnityEngine;
 public class Mover : MonoBehaviour
 {
     [SerializeField] List<WayPoint> path = new List<WayPoint>();
-    [SerializeField] float moveInterval = 1;
+    [SerializeField] [Range(0,5)] float speed = 1;
 
+    // private void Awake() {
+    //     transform.position = new Vector3(
+    //         path[0].transform.position.x,
+    //         transform.position.y,
+    //         path[0].transform.position.z
+    //     );
+    // }
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +28,20 @@ public class Mover : MonoBehaviour
 
     IEnumerator moveAlongPath()
     {
-        foreach(WayPoint wayPoint in path)
-        {
-            yield return new WaitForSeconds(moveInterval);
-            Vector2 nextPos = wayPoint.currentPos;
-            transform.position = new Vector3(nextPos[0], 0, nextPos[1]);
+        for (int i = 1; i < path.Count; i++){
+            Vector2 startPos = new Vector2(path[i-1].transform.position.x, path[i-1].transform.position.z);
+            Vector2 destination = new Vector2(path[i].transform.position.x, path[i].transform.position.z);
+            float movePercentage = 0;
+
+            transform.LookAt(new Vector3(destination[0], transform.position.y, destination[1]));
+
+            while (movePercentage < 1)
+            {
+                movePercentage += Time.deltaTime * speed;
+                Vector2 tempPos = Vector2.Lerp(startPos, destination, movePercentage);
+                transform.position = new Vector3(tempPos[0], transform.position.y ,tempPos[1]);
+                yield return new WaitForEndOfFrame();
+            }
         }
     }
 }
