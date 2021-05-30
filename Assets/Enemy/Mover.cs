@@ -33,13 +33,14 @@ public class Mover : MonoBehaviour
             Vector2 destination = new Vector2(path[i].transform.position.x, path[i].transform.position.z);
             float movePercentage = 0;
 
-            transform.LookAt(new Vector3(destination[0], transform.position.y, destination[1]));
+            Vector3 currentPos = transform.position;
+            transform.LookAt(currentPos + new Vector3(destination[0]-startPos[0],0,destination[1]-startPos[1]));
 
             while (movePercentage < 1)
             {
                 movePercentage += Time.deltaTime * speed;
                 Vector2 tempPos = Vector2.Lerp(startPos, destination, movePercentage);
-                transform.position = new Vector3(tempPos[0], transform.position.y ,tempPos[1]);
+                transform.position = currentPos +  new Vector3(tempPos[0]-startPos[0], 0 ,tempPos[1]-startPos[1]);
                 yield return new WaitForEndOfFrame();
             }
         }

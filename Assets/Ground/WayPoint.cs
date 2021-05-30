@@ -5,19 +5,15 @@ using UnityEngine;
 public class WayPoint : MonoBehaviour
 {
 
-    public Vector2 currentPos 
-    {
-        get=>new Vector2(transform.position.x,transform.position.z);
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] GameObject selectedFX;
+    
+    private void OnMouseOver() {
+        selectedFX.TryGetComponent<MeshRenderer>(out var renderer);
+        renderer.enabled = true;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    private void OnMouseExit() {
+        selectedFX.TryGetComponent<MeshRenderer>(out var renderer);
+        renderer.enabled = false;
     }
 }
