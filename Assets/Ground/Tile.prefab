@@ -270,8 +270,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 0
+  m_fontColor: {r: 0, g: 0, b: 0, a: 0}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -345,6 +345,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c91a8d69b088241418f485b156ca9c42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultColor: {r: 1, g: 1, b: 1, a: 1}
+  unDeployableColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1 &5588638739293856235
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +359,7 @@ GameObject:
   - component: {fileID: -3560076180448926170}
   - component: {fileID: 6315977401338646732}
   - component: {fileID: 3385809966923699687}
+  - component: {fileID: 2156608980677816324}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Ground
@@ -423,6 +426,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 10, y: 9.815587, z: 10}
   m_Center: {x: 0, y: 4.8464246, z: 0}
+--- !u!114 &2156608980677816324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5588638739293856235}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3c8923772162545bc40573f762665d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cube: {fileID: 2617164056880121182}
 --- !u!1 &8308632631169741914
 GameObject:
   m_ObjectHideFlags: 0

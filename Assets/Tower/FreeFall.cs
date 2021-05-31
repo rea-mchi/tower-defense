@@ -5,12 +5,14 @@ using UnityEngine;
 public class FreeFall : MonoBehaviour
 {
 
+    [SerializeField] int dmg = 1;
     [SerializeField] GameObject explosionVFX;
-
     [SerializeField] float TimeKeptOnGround = 3;
+
     float g = -9.8f;
     // Start is called before the first frame update
     bool hit = false;
+
     void Start()
     {
         
@@ -50,7 +52,7 @@ public class FreeFall : MonoBehaviour
         }
         else
         {
-            ExplodeWithEnemy(other.gameObject.transform);
+            ExplodeWithEnemy(other.gameObject);
         }
     }
 
@@ -58,9 +60,11 @@ public class FreeFall : MonoBehaviour
         explosionVFX = Instantiate(explosionVFX, transform.position, Quaternion.identity) as GameObject;
         Destroy(gameObject, TimeKeptOnGround);
     }
-    void ExplodeWithEnemy(Transform target) {
-        explosionVFX = Instantiate(explosionVFX, target.position, Quaternion.identity) as GameObject;
-        explosionVFX.transform.parent = target;
+    void ExplodeWithEnemy(GameObject target) {
+        explosionVFX = Instantiate(explosionVFX, target.transform.position, Quaternion.identity) as GameObject;
+        explosionVFX.transform.parent = target.transform;
+        target.TryGetComponent<Health>(out var targetHp);
+        targetHp.sufferDmg(dmg);
         Destroy(gameObject);
     }
 }

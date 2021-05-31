@@ -8,6 +8,7 @@ TagManager:
   - enemyBug
   - Castle
   - Ground
+  - Path
   layers:
   - Default
   - TransparentFX

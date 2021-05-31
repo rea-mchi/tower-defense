@@ -4,31 +4,56 @@ using UnityEngine;
 
 public class Mover : MonoBehaviour
 {
-    [SerializeField] List<WayPoint> path = new List<WayPoint>();
     [SerializeField] [Range(0,5)] float speed = 1;
 
-    // private void Awake() {
-    //     transform.position = new Vector3(
-    //         path[0].transform.position.x,
-    //         transform.position.y,
-    //         path[0].transform.position.z
-    //     );
-    // }
-    // Start is called before the first frame update
-    void Start()
-    {
+    WayPoint[] path;
+    Vector3 birthPoint;
+    private void Awake() {
+
+    }
+
+    private void Start() {
+        Debug.Log($"{gameObject.name} calls start");
+        findPathAndBirthPoint();
+        resetLocation();
+        StartCoroutine(moveAlongPath());
+    }
+    
+    private void OnEnable() {        
+        if (path == null)
+        {
+            return;
+        }
+        Debug.Log($"{gameObject.name} calls onEnable");
+        resetLocation();
         StartCoroutine(moveAlongPath());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+    
+    void findPathAndBirthPoint() {
+        path = GameObject.FindWithTag("Path").GetComponentsInChildren<WayPoint>();
+        // birth point
+        path[0].transform.TryGetComponent<CubeParas>(out var cubeParas);
+        birthPoint = new Vector3(
+            path[0].transform.position.x,
+            path[0].transform.position.y + cubeParas.LengthY,
+            path[0].transform.position.z
+        );
+    }
+
+    void resetLocation() {
+        Debug.Log($"resetLocation:{birthPoint.ToString()}");
+        transform.position = birthPoint;
     }
 
     IEnumerator moveAlongPath()
     {
-        for (int i = 1; i < path.Count; i++){
+        for (int i = 1; i < path.Length; i++){
             Vector2 startPos = new Vector2(path[i-1].transform.position.x, path[i-1].transform.position.z);
             Vector2 destination = new Vector2(path[i].transform.position.x, path[i].transform.position.z);
             float movePercentage = 0;
@@ -44,5 +69,11 @@ public class Mover : MonoBehaviour
                 yield return new WaitForEndOfFrame();
             }
         }
+
+        escapeOut();
+    }
+    
+    void escapeOut() {
+        gameObject.SetActive(false);
     }
 }

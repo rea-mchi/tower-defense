@@ -8,6 +8,10 @@ public class TargetLocate : MonoBehaviour
 
     private void Update() {
         var enemy = GameObject.FindWithTag("Enemy");
+        if (enemy == null)
+        {
+            return;
+        }
         aimer.transform.LookAt(new Vector3(
             enemy.transform.position.x,
             aimer.transform.position.y,

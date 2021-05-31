@@ -7,12 +7,19 @@ using UnityEditor;
 [ExecuteAlways]
 public class CoordinatesLabel : MonoBehaviour
 {
+    [SerializeField] Color defaultColor = Color.white;
+    [SerializeField] Color unDeployableColor = Color.clear;
+    Deploy block;
     TextMeshPro label;
     Vector2 coordinates = new Vector2Int();
     private void Awake() 
     {
         TryGetComponent<TextMeshPro>(out label);
         DisplayCoordinates();
+    }
+
+    private void Start() {
+        transform.parent.TryGetComponent<Deploy>(out block);
     }
 
     // Update is called once per frame
@@ -34,7 +41,8 @@ public class CoordinatesLabel : MonoBehaviour
             90, 
             label.transform.parent.rotation.eulerAngles.y*-1,
             0
-            );
+        );
+        label.color = (block == null || block.IsDeployable) ? defaultColor : unDeployableColor;
     }
 
     void UpdateContainerName()
